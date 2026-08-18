@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Student Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+        }
+
+        /* Navigation Bar */
+
+        .navbar {
+            background-color: #000000;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+        }
+
+        .logout {
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .logout:hover {
+            background-color: #b02a37;
+        }
+
+        /* Main Container */
+
+        .container {
+            width: 80%;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            margin-bottom: 30px;
+        }
+
+        .welcome h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #666;
+        }
+
+        /* Profile Card */
+
+        .card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #1f4e79;
+            margin-bottom: 25px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .detail-box {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .detail-box strong {
+            display: block;
+            color: #555;
+            margin-bottom: 7px;
+        }
+
+        .detail-box span {
+            color: #222;
+        }
+
+        /* Footer */
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 20px;
+            color: #777;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 90%;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+
+    <div class="navbar">
+
+        <h2>Student Management System</h2>
+
+        <a href="/edit_profile" class="edit">
+            Edit Profile
+        </a>
+
+    </div>
+
+
+    <!-- Main Content -->
+
+    <div class="container">
+
+        <div class="welcome">
+
+            <h1>Welcome, {{ student[1] }}! 👋</h1>
+
+            <p>
+                Welcome to your student dashboard.
+            </p>
+
+        </div>
+
+
+        <!-- Student Information -->
+
+        <div class="card">
+
+            <h2>Student Profile</h2>
+
+            <div class="details">
+
+                <div class="detail-box">
+
+                    <strong>Student ID</strong>
+
+                    <span>
+                        {{ student[0] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>Name</strong>
+
+                    <span>
+                        {{ student[1] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>Email</strong>
+
+                    <span>
+                        {{ student[2] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>Phone</strong>
+
+                    <span>
+                        {{ student[3] }}
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <strong>Course</strong>
+
+                    <span>
+                        {{ student[4] }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        Student Management System © 2026
+
+    </footer>
+
+</body>
+
+</html>

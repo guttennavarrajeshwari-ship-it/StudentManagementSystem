@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+        }
+
+        .navbar {
+            background-color: #000000;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 450px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #000000;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #000000;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #333333;
+        }
+
+        .back {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #000000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h2>Student Management System</h2>
+    </div>
+
+    <div class="container">
+
+        <h2>Edit Student Profile</h2>
+
+        <form method="POST" action="/edit_profile">
+
+            <label>Name</label>
+
+            <input
+                type="text"
+                name="name"
+                value="{{ student[1] }}"
+                required
+            >
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                value="{{ student[2] }}"
+                disabled
+            >
+
+            <label>Phone</label>
+
+            <input
+                type="text"
+                name="phone"
+                value="{{ student[3] }}"
+            >
+
+            <label>Course</label>
+
+            <input
+                type="text"
+                name="course"
+                value="{{ student[4] }}"
+            >
+
+            <button type="submit" class="button">
+                Update Profile
+            </button>
+
+        </form>
+
+        <a href="/dashboard" class="back">
+            ← Back to Dashboard
+        </a>
+
+    </div>
+
+</body>
+
+</html>
