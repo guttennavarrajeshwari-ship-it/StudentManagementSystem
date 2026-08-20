@@ -1,20 +1,24 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
+import os
 
 app = Flask(__name__)
 
-# Secret key for login session
-app.secret_key = "student_management_secret_key"
-
+# Secret key
+app.secret_key = os.environ.get(
+    "SECRET_KEY",
+    "student_management_secret_key"
+)
 
 # -----------------------------
 # MySQL Database Connection
 # -----------------------------
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="student_management"
+    host=os.environ.get("DB_HOST", "localhost"),
+    user=os.environ.get("DB_USER", "root"),
+    password=os.environ.get("DB_PASSWORD", "root"),
+    database=os.environ.get("DB_NAME", "student_management"),
+    port=int(os.environ.get("DB_PORT", "3306"))
 )
 
 print("MySQL Database Connected Successfully!")
@@ -88,10 +92,7 @@ def login():
         cursor.close()
 
         if student:
-
-            # Store student ID in session
             session["student_id"] = student[0]
-
             return redirect(url_for("dashboard"))
 
         else:
@@ -106,7 +107,6 @@ def login():
 @app.route("/dashboard")
 def dashboard():
 
-    # Check whether student is logged in
     if "student_id" not in session:
         return redirect(url_for("login"))
 
@@ -133,13 +133,14 @@ def dashboard():
         )
 
     return "Student not found!"
+
+
 # -----------------------------
 # Edit Student Profile
 # -----------------------------
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
 
-    # Check if student is logged in
     if "student_id" not in session:
         return redirect(url_for("login"))
 
@@ -147,7 +148,6 @@ def edit_profile():
 
     cursor = db.cursor()
 
-    # Get current student information
     if request.method == "GET":
 
         query = """
@@ -166,7 +166,6 @@ def edit_profile():
             student=student
         )
 
-    # Update student information
     name = request.form["name"]
     phone = request.form["phone"]
     course = request.form["course"]
@@ -187,6 +186,7 @@ def edit_profile():
 
     return redirect(url_for("dashboard"))
 
+
 # -----------------------------
 # Logout
 # -----------------------------
@@ -196,6 +196,7 @@ def logout():
     session.clear()
 
     return redirect(url_for("login"))
+
 
 # -----------------------------
 # Teacher Login
@@ -222,18 +223,21 @@ def teacher_login():
         cursor.close()
 
         if teacher:
-
             session["teacher_id"] = teacher[0]
-
             return "Teacher Login Successful!"
 
         else:
-
             return "Invalid Teacher Email or Password!"
 
     return render_template("teacher_login.html")
+
+
 # -----------------------------
 # Run Application
 # -----------------------------
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=True
+    )

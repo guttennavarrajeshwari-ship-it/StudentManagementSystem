@@ -55,25 +55,42 @@
             background-color: #1f4e79;
             color: white;
         }
+
+        .footer p {
+            color: white;
+        }
     </style>
 </head>
 
 <body>
 
+    <!-- Header -->
     <div class="header">
         <h1>Student Management System</h1>
     </div>
 
+    <!-- Main Content -->
     <div class="container">
+
         <h2>Welcome to Student Management System</h2>
 
-        <p>Manage student registration and information easily.</p>
+        <p>
+            Manage student registration and information easily.
+        </p>
 
-        <a href="#" class="button">Register</a>
+        <!-- Registration Button -->
+        <a href="{{ url_for('register') }}" class="button">
+            Register
+        </a>
 
-        <a href="#" class="button">Login</a>
+        <!-- Login Button -->
+        <a href="{{ url_for('login') }}" class="button">
+            Login
+        </a>
+
     </div>
 
+    <!-- Footer -->
     <div class="footer">
         <p>© 2026 Student Management System</p>
     </div>
