@@ -1,28 +1,348 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Student Login</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #7b2ff7, #b14cff, #00c6ff);
+        }
+
+        .container {
+            width: 900px;
+            min-height: 520px;
+            display: flex;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        /* LEFT SECTION */
+        .left-section {
+            width: 45%;
+            background: linear-gradient(135deg, #7b2ff7, #b14cff);
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            text-align: center;
+            padding: 40px;
+        }
+
+        .icon {
+            font-size: 70px;
+            margin-bottom: 20px;
+        }
+
+        .left-section h1 {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .left-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* RIGHT SECTION */
+        .right-section {
+            width: 55%;
+            padding: 50px 60px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .right-section h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 35px;
+        }
+
+        /* INPUT */
+        .input-box {
+            margin-bottom: 22px;
+        }
+
+        .input-box label {
+            display: block;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px 15px;
+
+            border: none;
+            border-bottom: 2px solid #d5d5d5;
+
+            outline: none;
+            background: #fafafa;
+
+            font-size: 15px;
+
+            border-radius: 5px 5px 0 0;
+
+            transition: 0.3s;
+        }
+
+        .input-box input:focus {
+            border-bottom: 2px solid #7b2ff7;
+            background: #faf7ff;
+        }
+
+        /* OPTIONS */
+        .options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 25px;
+
+            font-size: 14px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            color: #666;
+        }
+
+        .remember input {
+            width: auto;
+        }
+
+        .forgot {
+            color: #7b2ff7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* LOGIN BUTTON */
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+
+            border: none;
+            border-radius: 6px;
+
+            background: linear-gradient(90deg, #7b2ff7, #b14cff);
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(123, 47, 247, 0.3);
+        }
+
+        /* CREATE ACCOUNT */
+        .bottom-text {
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .bottom-text a {
+            color: #7b2ff7;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .bottom-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* MOBILE */
+        @media (max-width: 750px) {
+
+            .container {
+                width: 92%;
+                flex-direction: column;
+            }
+
+            .left-section,
+            .right-section {
+                width: 100%;
+            }
+
+            .left-section {
+                padding: 30px;
+            }
+
+            .right-section {
+                padding: 35px 30px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-    <h1>Student Login</h1>
+    <div class="container">
 
-    <form method="POST" action="/login">
+        <!-- LEFT SIDE -->
 
-        <label>Email:</label>
-        <input type="email" name="email" required>
+        <div class="left-section">
 
-        <br><br>
+            <div class="icon">🎓</div>
 
-        <label>Password:</label>
-        <input type="password" name="password" required>
+            <h1>Welcome Back!</h1>
 
-        <br><br>
+            <p>
+                Login to access your student dashboard
+                and manage your academic information.
+            </p>
 
-        <button type="submit">Login</button>
+        </div>
 
-    </form>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="right-section">
+
+            <h2>Student Login</h2>
+
+            <p class="subtitle">
+                Login to your account
+            </p>
+
+
+            <!-- LOGIN FORM -->
+
+            <form method="POST" action="{{ url_for('login') }}">
+
+                <!-- EMAIL -->
+
+                <div class="input-box">
+
+                    <label>Email Address</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="input-box">
+
+                    <label>Password</label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- REMEMBER + FORGOT PASSWORD -->
+
+                <div class="options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            name="remember"
+                        >
+
+                        Remember me
+
+                    </label>
+
+
+                    <!-- FORGOT PASSWORD -->
+
+                    <a
+                        href="{{ url_for('forgot_password') }}"
+                        class="forgot"
+                    >
+                        Forgot Password?
+                    </a>
+
+                </div>
+
+
+                <!-- LOGIN BUTTON -->
+
+                <button
+                    type="submit"
+                    class="login-btn"
+                >
+                    LOGIN
+                </button>
+
+            </form>
+
+
+            <!-- REGISTER LINK -->
+
+            <p class="bottom-text">
+
+                Don't have an account?
+
+                <a href="{{ url_for('register') }}">
+                    Create Account
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
 
 </body>
 </html>

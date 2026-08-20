@@ -186,7 +186,53 @@ def edit_profile():
 
     return redirect(url_for("dashboard"))
 
+# -----------------------------
+# Forgot Password
+# -----------------------------
+@app.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
 
+    if request.method == "POST":
+
+        email = request.form["email"]
+        phone = request.form["phone"]
+        new_password = request.form["new_password"]
+
+        cursor = db.cursor()
+
+        # Check email and phone
+        query = """
+        SELECT id FROM students
+        WHERE email = %s AND phone = %s
+        """
+
+        cursor.execute(query, (email, phone))
+        student = cursor.fetchone()
+
+        if student:
+
+            # Update password
+            update_query = """
+            UPDATE students
+            SET password = %s
+            WHERE id = %s
+            """
+
+            cursor.execute(
+                update_query,
+                (new_password, student[0])
+            )
+
+            db.commit()
+            cursor.close()
+
+            return redirect(url_for("login"))
+
+        else:
+            cursor.close()
+            return "Email and Phone Number do not match!"
+
+    return render_template("forgot_password.html")
 # -----------------------------
 # Logout
 # -----------------------------
