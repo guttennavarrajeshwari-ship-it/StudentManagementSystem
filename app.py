@@ -1,3 +1,4 @@
+
 from flask import Flask, render_template, request, redirect, url_for, session
 import mysql.connector
 import os
@@ -93,6 +94,8 @@ def login():
 
         if student:
             session["student_id"] = student[0]
+            session["username"] = student[1]
+
             return redirect(url_for("dashboard"))
 
         else:
@@ -134,57 +137,6 @@ def dashboard():
 
     return "Student not found!"
 
-
-# -----------------------------
-# Edit Student Profile
-# -----------------------------
-@app.route("/edit_profile", methods=["GET", "POST"])
-def edit_profile():
-
-    if "student_id" not in session:
-        return redirect(url_for("login"))
-
-    student_id = session["student_id"]
-
-    cursor = db.cursor()
-
-    if request.method == "GET":
-
-        query = """
-        SELECT id, name, email, phone, course
-        FROM students
-        WHERE id = %s
-        """
-
-        cursor.execute(query, (student_id,))
-        student = cursor.fetchone()
-
-        cursor.close()
-
-        return render_template(
-            "edit_profile.html",
-            student=student
-        )
-
-    name = request.form["name"]
-    phone = request.form["phone"]
-    course = request.form["course"]
-
-    query = """
-    UPDATE students
-    SET name = %s, phone = %s, course = %s
-    WHERE id = %s
-    """
-
-    cursor.execute(
-        query,
-        (name, phone, course, student_id)
-    )
-
-    db.commit()
-    cursor.close()
-
-    return redirect(url_for("dashboard"))
 
 # -----------------------------
 # Forgot Password
@@ -233,6 +185,8 @@ def forgot_password():
             return "Email and Phone Number do not match!"
 
     return render_template("forgot_password.html")
+
+
 # -----------------------------
 # Logout
 # -----------------------------
@@ -245,40 +199,6 @@ def logout():
 
 
 # -----------------------------
-# Teacher Login
-# -----------------------------
-@app.route("/teacher_login", methods=["GET", "POST"])
-def teacher_login():
-
-    if request.method == "POST":
-
-        email = request.form["email"]
-        password = request.form["password"]
-
-        cursor = db.cursor()
-
-        query = """
-        SELECT * FROM teachers
-        WHERE email = %s AND password = %s
-        """
-
-        cursor.execute(query, (email, password))
-
-        teacher = cursor.fetchone()
-
-        cursor.close()
-
-        if teacher:
-            session["teacher_id"] = teacher[0]
-            return "Teacher Login Successful!"
-
-        else:
-            return "Invalid Teacher Email or Password!"
-
-    return render_template("teacher_login.html")
-
-
-# -----------------------------
 # Run Application
 # -----------------------------
 if __name__ == "__main__":
@@ -287,3 +207,4 @@ if __name__ == "__main__":
         port=int(os.environ.get("PORT", 5000)),
         debug=True
     )
+
